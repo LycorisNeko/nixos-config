@@ -57,7 +57,7 @@
 | 虛擬化 | Docker、virt-manager/QEMU/KVM |
 | 資料庫 | PostgreSQL 17 |
 | 打印 | CUPS、`epson-escpr`、`epson-escpr2`、`system-config-printer` |
-| AI | Ollama (ROCm, llama3.1:8b)、LM Studio、Claude Code、DeepSeek Harness、Google Antigravity CLI (`agy`)、Antigravity Tools (`antigravity-manage`) |
+| AI | Ollama (ROCm, llama3.1:8b)、LM Studio、Claude Code、Google Antigravity CLI (`agy`)、Antigravity Tools (`antigravity-manage`) |
 | 音樂 | 網易雲音樂 (netease-cloud-music-gtk) |
 | 媒體 | MPV、OBS Studio |
 | 3D 建模 | Blender (AMD HIP/ROCm GPU 加速) |
@@ -140,7 +140,6 @@
 | cava | 音訊視覺化 |
 | [agy](https://antigravity.google) | Google Antigravity CLI（終端智慧代理客戶端） |
 | [claude-code](https://github.com/sadjow/claude-code-nix) | Anthropic Claude Code AI 終端輔助工具 |
-| [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | DeepSeek Harness 開源 Agent 桌面版（`dsh-desktop`，Wayland / fcitx5 支援） |
 | [antigravity-tools](https://github.com/lbjlaq/Antigravity-Manager) | Antigravity 帳號管理、額度監控與本地代理（指令別名：`antigravity-manage`、`at`） |
 
 ### 遊戲與轉譯層
@@ -245,7 +244,6 @@ nixos-config/
     │   ├── motrix/               # Motrix 下載管理員
     │   ├── qq/                   # QQ Linux 桌面版
     │   ├── wechat/               # WeChat 客户端
-    │   ├── deepseek-harness/     # DeepSeek Harness 桌面版
     │   ├── antigravity-manager/  # Antigravity Tools 帳號管理與多模型本地代理
     │   ├── discord/              # Discord (Vencord)
     │   ├── chrome/               # 瀏覽器配置

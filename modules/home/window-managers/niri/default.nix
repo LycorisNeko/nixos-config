@@ -241,7 +241,6 @@
           matches = [
             { app-id = "^(code|Code)$"; }
             { app-id = "^(postman|Postman)$"; }
-            { app-id = "^(deepseek-ai-dsh-desktop|deepseek-harness|dsh-desktop|DeepSeek Harness)$"; }
             { app-id = "^(antigravity-tools|com\\.lbjlaq\\.antigravity-tools)$"; }
           ];
           opacity = 0.94;

@@ -41,10 +41,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    deepseek-harness = {
-      url = "github:moraxyc/deepseek-harness.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -54,7 +50,6 @@
       nixvim,
       nur,
       claude-code,
-      deepseek-harness,
       ...
     }:
     {
@@ -74,7 +69,6 @@
               nixpkgs.overlays = [
                 nur.overlays.default
                 claude-code.overlays.default
-                deepseek-harness.overlays.default
               ];
             }
           )
