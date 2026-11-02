@@ -3,19 +3,9 @@
   # 1. 啟用系統級 Niri 視窗管理器
   programs.niri.enable = true;
 
-  services.displayManager.noctalia-greeter = {
-    enable = true;
-    passwordless-sync-users = [ "AnyNeko" ]; # 允许你的用户同步壁纸和配色到 Greeter
-    settings = {
-      session.default = "niri";
-      appearance = {
-        scheme = "Synced"; # 自动读取桌面壁纸和配色
-      };
-    };
-  };
-
-  # 啟用 GNOME Keyring 供 greetd 登入時自動解鎖秘鑰環
-  security.pam.services.greetd.enableGnomeKeyring = true;
+  # 2. 認證與登入配置 (方案 A: TTY 自動登入 AnyNeko，桌面由 hyprlock 進行密碼驗證)
+  services.getty.autologinUser = "AnyNeko";
+  security.pam.services.hyprlock = {};
   services.gnome.gnome-keyring.enable = true;
 
   # 3. 硬體與系統服務配置

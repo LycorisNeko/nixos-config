@@ -9,6 +9,12 @@
       fastfetch
     '';
 
+    loginShellInit = ''
+      if test -z "$DISPLAY" -a -z "$WAYLAND_DISPLAY" -a (tty) = "/dev/tty1"
+        exec niri-session
+      end
+    '';
+
     shellAliases = {
       ls = "eza --icons";
       ll = "eza -la --icons --git";

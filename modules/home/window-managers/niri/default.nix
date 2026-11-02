@@ -156,6 +156,7 @@
       # 匯出 $DISPLAY、按需啟動並在崩潰時自動重啟），因此不可再手動啟動，
       # 否則會同時存在兩個實例互相競爭 X11 剪貼簿同步，導致貼上偶發失敗。
       spawn-at-startup = [
+        { command = [ "hyprlock" ]; }
         { command = [ "noctalia" ]; }
         {
           command = [
@@ -657,10 +658,7 @@
           "nightlight-toggle"
         ];
         "Mod+Shift+L".action.spawn = [
-          "noctalia"
-          "msg"
-          "session"
-          "lock"
+          "hyprlock"
         ];
 
         # Media
