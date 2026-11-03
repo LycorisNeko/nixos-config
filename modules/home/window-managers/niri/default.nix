@@ -71,7 +71,8 @@
         xcursor_size = "24";
       };
 
-      gestures.hot-corners.enable = false;
+      # 新版 niri-flake 語法：明確關閉左上角觸發熱區
+      gestures.hot-corners.top-left = false;
 
       # 顯示器縮放（DP-1 為目前 4K 螢幕）
       outputs."DP-1".scale = 1.25;
@@ -340,7 +341,6 @@
             blur = true;
           };
         }
-
 
         # 8. 系统工具与控制面板 (System Utilities & Control Panels)
         {
@@ -708,37 +708,4 @@
           ];
         };
         "XF86AudioMicMute" = {
-          allow-when-locked = true;
-          action.spawn = [
-            "wpctl"
-            "set-mute"
-            "@DEFAULT_AUDIO_SOURCE@"
-            "toggle"
-          ];
-        };
-
-        # Brightness
-        "XF86MonBrightnessUp" = {
-          allow-when-locked = true;
-          action.spawn = [
-            "brightnessctl"
-            "set"
-            "5%+"
-          ];
-        };
-        "XF86MonBrightnessDown" = {
-          allow-when-locked = true;
-          action.spawn = [
-            "brightnessctl"
-            "set"
-            "5%-"
-          ];
-        };
-      };
-    };
-  };
-
-  home.packages = with pkgs; [
-    xwayland-satellite
-  ];
-}
+          
