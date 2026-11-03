@@ -188,7 +188,7 @@ in
         # 啟動 fcitx5 輸入法守護行程
         {
           command = [
-            "fcitx5"
+            "${config.i18n.inputMethod.package}/bin/fcitx5"
             "-d"
             "--replace"
           ];
