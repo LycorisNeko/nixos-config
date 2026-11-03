@@ -73,7 +73,7 @@
               # 忽略/放行 GTK2 的 broken 標記
               nixpkgs.config = {
                 problems.handlers = {
-                  "gtk+".broken = "warn";
+                  "gtk+".broken = "ignore";
                 };
               };
             }

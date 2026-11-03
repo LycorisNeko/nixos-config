@@ -12,7 +12,7 @@
     # Point to the rasi theme file (co-located in this directory)
     theme = ./tokyonight-moon.rasi;
 
-    extraConfig = {
+    settings = {
       # Modes
       modi = "drun,run,window,emoji,calc";
 
