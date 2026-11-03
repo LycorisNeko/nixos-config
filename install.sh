@@ -31,14 +31,14 @@ else
     fi
 fi
 
-# 2. Update Nix Flake inputs (flake.lock)
-echo -e "${GREEN}[2/4] Updating Nix Flake lock (flake.lock)...${NC}"
-nix --extra-experimental-features "nix-command flakes" flake update
-
-# 3. Stage changes to Git (Nix Flakes only recognizes tracked files)
-echo -e "${GREEN}[3/4] Staging all changes to Git...${NC}"
+# 2. Stage changes to Git (prevents dirty tree warnings during flake update)
+echo -e "${GREEN}[2/4] Staging hardware configuration to Git...${NC}"
 git add -A
-echo -e "  All configuration files and lock updates staged."
+echo -e "  Hardware configuration staged."
+
+# 3. Update Nix Flake inputs (with verbose output to monitor progress)
+echo -e "${GREEN}[3/4] Updating Nix Flake lock (flake.lock)...${NC}"
+nix --extra-experimental-features "nix-command flakes" flake update -v --commit-lock-file
 
 # 4. Rebuild and switch NixOS configuration
 echo -e "${GREEN}[4/4] Building and applying NixOS configuration...${NC}"
