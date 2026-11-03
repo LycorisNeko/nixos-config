@@ -49,7 +49,6 @@
 
   # 静默开机配置：隐藏终端日志输出与 initrd 冗余信息
   boot.consoleLogLevel = 0;
-  boot.initrd.verbose = false;
 
   # Early KMS: 在 initrd 阶段尽早加载 AMD 显卡驱动，确保 Plymouth 流畅无闪烁渲染
   boot.initrd.kernelModules = [ "amdgpu" ];
