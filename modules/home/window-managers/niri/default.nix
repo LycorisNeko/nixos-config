@@ -162,6 +162,22 @@
       # 匯出 $DISPLAY、按需啟動並在崩潰時自動重啟），因此不可再手動啟動，
       # 否則會同時存在兩個實例互相競爭 X11 剪貼簿同步，導致貼上偶發失敗。
       spawn-at-startup = [
+        # 同步環境變數至 systemd 與 D-Bus，保證桌面 Portal 與背景服務正常運作
+        {
+          command = [
+            "bash"
+            "-c"
+            "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET && dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET"
+          ];
+        }
+        # 啟動 fcitx5 輸入法守護行程
+        {
+          command = [
+            "fcitx5"
+            "-d"
+            "--replace"
+          ];
+        }
         { command = [ "hyprlock" ]; }
         { command = [ "noctalia" ]; }
         {
@@ -220,6 +236,15 @@
         {
           # 媒体查看器：保持不透明以呈现原画质，启用圆角裁剪
           matches = [ { app-id = "^(imv|mpv)$"; } ];
+          open-floating = true;
+        }
+
+        # 输入法配置与弹窗浮动
+        {
+          matches = [
+            { app-id = "^org\\.fcitx\\.fcitx5-config-qt$"; }
+            { app-id = "fcitx"; }
+          ];
           open-floating = true;
         }
 

@@ -13,8 +13,7 @@
         name = LycorisNeko
         email = lycorisneko2023@gmail.com
       [credential]
-        # 使用系统 GNOME Keyring 保存 HTTPS 凭据，避免写入明文文件
-        helper = libsecret
+        helper = store
     '';
   };
 }

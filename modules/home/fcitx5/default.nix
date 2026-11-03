@@ -15,8 +15,20 @@
       waylandFrontend = true;
       settings = {
         globalOptions = {
+          Hotkey = {
+            EnumerateWithTriggerKeys = "True";
+          };
           "Hotkey/TriggerKeys" = {
-            "0" = "Shift_L"; # 改为左 Shift 切换
+            "0" = "Control+space";
+          };
+          "Hotkey/AltTriggerKeys" = {
+            "0" = "Shift_L"; # 單按左 Shift 切換中/英文
+          };
+          "Hotkey/EnumerateForwardKeys" = {
+            "0" = "Control+Shift_L";
+          };
+          "Hotkey/EnumerateBackwardKeys" = {
+            "0" = "Control+Shift_R";
           };
         };
         inputMethod = {
@@ -41,8 +53,8 @@
             PreferTextIcon = "False";
             ShowLayoutNameInIcon = "True";
             UseInputMethodLanguageToDisplayText = "True";
-            Theme = "kwinblur-mellow-sakura";
-            DarkTheme = "kwinblur-mellow-sakura-dark";
+            Theme = "mellow-sakura";
+            DarkTheme = "mellow-sakura-dark";
             UseDarkTheme = "True";
             UseAccentColor = "True";
             PerScreenDPI = "False";
@@ -73,4 +85,7 @@
       };
     };
   };
+
+  # 確保 fcitx5 主題目錄也同步軟連結至 ~/.local/share/fcitx5/themes，保證 UI 隨時可找到主題
+  xdg.dataFile."fcitx5/themes".source = "${pkgs.fcitx5-mellow-themes}/share/fcitx5/themes";
 }
