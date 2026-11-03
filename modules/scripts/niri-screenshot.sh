@@ -25,5 +25,7 @@ done
 rm -f "$MARKER"
 
 if [ -n "$NEW_FILE" ]; then
+  wl-copy < "$NEW_FILE" 2>/dev/null || true
+  notify-send -a "Screenshot" "截圖已儲存並複製到剪貼簿" "$NEW_FILE" -i "$NEW_FILE" -u low 2>/dev/null || true
   swappy -f "$NEW_FILE"
 fi

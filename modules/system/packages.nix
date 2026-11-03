@@ -30,6 +30,7 @@
     xdg-utils
     tree
     ntfs3g
+    dosfstools
     hyprpolkitagent
 
     visidata

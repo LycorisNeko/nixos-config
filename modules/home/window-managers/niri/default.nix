@@ -1,4 +1,10 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
+let
+  niriScreenshot = pkgs.writeShellScriptBin "niri-screenshot.sh" ''
+    export PATH="${pkgs.lib.makeBinPath (with pkgs; [ coreutils findutils wl-clipboard swappy libnotify config.programs.niri.package ])}:$PATH"
+    exec ${pkgs.bash}/bin/bash ${../../../scripts/niri-screenshot.sh} "$@"
+  '';
+in
 {
   programs.niri = {
     settings = {
@@ -167,7 +173,16 @@
           command = [
             "bash"
             "-c"
-            "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET && dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET"
+            "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET PATH && dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET PATH"
+          ];
+        }
+        # 啟動 Polkit 圖形認證代理
+        {
+          command = [
+            "systemctl"
+            "--user"
+            "start"
+            "hyprpolkitagent"
           ];
         }
         # 啟動 fcitx5 輸入法守護行程
@@ -601,14 +616,14 @@
         ];
 
         # Screenshots
-        "Mod+S".action.spawn = [ "niri-screenshot.sh" ];
+        "Mod+S".action.spawn = [ "${niriScreenshot}/bin/niri-screenshot.sh" ];
         "Mod+Shift+S".action.spawn = [
-          "niri-screenshot.sh"
+          "${niriScreenshot}/bin/niri-screenshot.sh"
           "screen"
         ];
-        "Print".action.spawn = [ "niri-screenshot.sh" ];
+        "Print".action.spawn = [ "${niriScreenshot}/bin/niri-screenshot.sh" ];
         "Shift+Print".action.spawn = [
-          "niri-screenshot.sh"
+          "${niriScreenshot}/bin/niri-screenshot.sh"
           "screen"
         ];
 
@@ -779,5 +794,6 @@
 
   home.packages = with pkgs; [
     xwayland-satellite
+    niriScreenshot
   ];
 }

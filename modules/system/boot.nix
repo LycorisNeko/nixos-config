@@ -84,7 +84,10 @@
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = [
+    "ntfs"
+    "btrfs"
+  ];
 
   services.fstrim.enable = true;
   zramSwap.enable = true;

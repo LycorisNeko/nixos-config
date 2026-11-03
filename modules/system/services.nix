@@ -32,10 +32,27 @@
 
   programs.thunar.enable = true;
   services.gvfs.enable = true;
+  services.udisks2.enable = true;
   services.tumbler.enable = true;
   services.openssh.enable = true;
 
-  security.polkit.enable = true;
+  security.polkit = {
+    enable = true;
+    extraConfig = ''
+      polkit.addRule(function(action, subject) {
+        if ((action.id == "org.freedesktop.udisks2.filesystem-mount" ||
+             action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+             action.id == "org.freedesktop.udisks2.filesystem-mount-other-seat" ||
+             action.id == "org.freedesktop.udisks2.encrypted-unlock" ||
+             action.id == "org.freedesktop.udisks2.encrypted-unlock-system" ||
+             action.id == "org.freedesktop.udisks2.eject-media" ||
+             action.id == "org.freedesktop.udisks2.power-off-drive") &&
+            subject.isInGroup("wheel")) {
+          return polkit.Result.YES;
+        }
+      });
+    '';
+  };
 
   # 4. 資料庫配置
   services.postgresql = {

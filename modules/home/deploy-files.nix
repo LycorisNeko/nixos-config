@@ -4,6 +4,14 @@
     source = ../scripts/niri-screenshot.sh;
     executable = true;
   };
+  home.file.".local/bin/captureFullscreen.sh" = {
+    source = ../scripts/captureFullscreen.sh;
+    executable = true;
+  };
+  home.file.".local/bin/captureSelectArea.sh" = {
+    source = ../scripts/captureSelectArea.sh;
+    executable = true;
+  };
 
   # GitHub 用户信息与凭据助手配置
   home.file.".gitconfig" = {

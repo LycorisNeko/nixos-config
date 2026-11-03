@@ -209,6 +209,20 @@
 | `XF86Brightness*` | 亮度調節（鎖定畫面亦可用） |
 | `Shift_L` / `Ctrl + Space` | 切換輸入法 (fcitx5 拼音) |
 
+### 輸入法切換快捷鍵 (Fcitx5)
+
+- **單按左 Shift (`Shift_L`)**：設定在 `Hotkey/AltTriggerKeys`，點按即可在中英文之間切換。
+- **`Ctrl + Space` (`Control+space`)**：保留為全局輸入法切換 / 激活鍵（`Hotkey/TriggerKeys`）。
+- **`Ctrl + Shift` (`Control+Shift_L`)**：循環切換輸入法（`Hotkey/EnumerateForwardKeys`）。
+
+> [!NOTE]
+> **切換快捷鍵修復**：
+> - **原因**：先前直接將 `Shift_L` 填入 `Hotkey/TriggerKeys`。在 fcitx5 中，單按修飾鍵（如左 Shift）切換中英文必須使用專屬的 `Hotkey/AltTriggerKeys`，若直接填入 `TriggerKeys` 會被當成組合鍵前綴而無法正確觸發單鍵切換。
+> - **修復**：
+>   - 單按左 Shift（`Shift_L`）：設定在 `Hotkey/AltTriggerKeys`，點按即可在中英文之間切換。
+>   - Ctrl + 空格（`Control+space`）：保留為全局輸入法切換 / 激活鍵（`Hotkey/TriggerKeys`）。
+>   - Ctrl + Shift（`Control+Shift_L`）：循環切換輸入法（`Hotkey/EnumerateForwardKeys`）。
+
 ---
 
 ## 目錄結構
