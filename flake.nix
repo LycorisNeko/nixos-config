@@ -69,6 +69,8 @@
                 nur.overlays.default
                 claude-code.overlays.default
               ];
+              # 允許評估標記為 broken 的過時套件（如 gtk2）以避免建構中斷
+              nixpkgs.config.allowBroken = true;
             }
           )
 
