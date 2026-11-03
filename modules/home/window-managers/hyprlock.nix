@@ -20,7 +20,7 @@
           color = "rgba(25, 20, 20, 1.0)";
           blur_passes = 3;
           blur_size = 7;
-          brightness = 0.5;
+          brightness = 0.6;
           contrast = 1.0;
           vibrancy = 0.2;
           vibrancy_darkness = 0.1;
@@ -62,7 +62,7 @@
         {
           monitor = "";
           text = "Welcome back, AnyNeko";
-          color = "rgba(130, 56, 252, 0.85)"; # purple #c099ff toned
+          color = "rgba(192, 153, 255, 0.9)"; # purple #c099ff
           font_size = 16;
           font_family = "JetBrainsMono Nerd Font";
           position = "0, 60";
@@ -91,7 +91,7 @@
           size = 100;
           rounding = -1; # fully circular
           border_size = 3;
-          border_color = "rgba(130, 170, 255, 0.8)"; # blue #82aaff
+          border_color = "rgba(130, 170, 255, 0.7)"; # blue #82aaff
           position = "0, -30";
           halign = "center";
           valign = "center";
@@ -116,8 +116,8 @@
           dots_center = true;
           dots_rounding = -1;
 
-          outer_color = "rgba(47, 51, 77, 0.9)"; # surface0 #2f334d
-          inner_color = "rgba(34, 36, 54, 0.95)"; # bg #222436
+          outer_color = "rgba(130, 170, 255, 0.5)"; # 柔和通透边框 (50% 不透明度)
+          inner_color = "rgba(34, 36, 54, 0.65)"; # 舒适磨砂毛玻璃透光 (65% 不透明度)
           font_color = "rgba(200, 211, 245, 1.0)"; # text #c8d3f5
           fade_on_empty = true;
           fade_timeout = 1000;
@@ -137,7 +137,7 @@
 
           shadow_passes = 3;
           shadow_size = 12;
-          shadow_color = "rgba(27, 29, 43, 0.8)";
+          shadow_color = "rgba(0, 0, 0, 0.4)";
         }
       ];
     };

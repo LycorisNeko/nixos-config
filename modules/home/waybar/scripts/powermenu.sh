@@ -14,7 +14,7 @@ chosen=$(printf "$LOCK\n$SUSPEND\n$LOGOUT\n$REBOOT\n$SHUTDOWN" \
          -no-custom)
 
 case "$chosen" in
-  "$LOCK")     noctalia msg session lock || loginctl lock-session ;;
+  "$LOCK")     loginctl lock-session ;;
   "$SUSPEND")  systemctl suspend ;;
   "$LOGOUT")   niri msg action quit --skip-confirmation || hyprctl dispatch exit ;;
   "$REBOOT")   systemctl reboot ;;
