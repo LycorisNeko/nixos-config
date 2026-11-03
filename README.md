@@ -38,7 +38,7 @@
 |---|---|
 | 作業系統 | NixOS (unstable) |
 | 核心 | Linux XanMod Latest |
-| 顯示管理器 | [noctalia-greeter](https://github.com/noctalia-dev/noctalia-greeter) |
+| 鎖定與認證 | [hyprlock](https://github.com/hyprwm/hyprlock) (Tokyo Night) + Getty Autologin |
 | 合成器 | [niri](https://github.com/YaLTeR/niri) |
 | 桌面外殼 | [noctalia-shell](https://github.com/noctalia-dev/noctalia) (zh-Hant) |
 | 編輯器 / IDE | [nixvim](https://github.com/nix-community/nixvim) (Neovim — Tokyo Night Moon)、[VS Code](https://code.visualstudio.com) (FHS + 繁簡中文 + Tokyo Night + 宣告式外掛生態) |
@@ -89,7 +89,7 @@
 - **啟動器** — 應用程式搜尋 + 剪貼簿歷史 + 視窗切換器 + 設定搜尋
 - **控制中心** — 個人資料卡、快速開關（Wi-Fi、藍牙、保持喚醒、電源模式、通知、夜燈、桌布）、音訊卡、亮度、天氣、媒體 + 系統監控
 - **桌布挑選器** — 隨機輪播、多種動畫轉場（fade、disc、stripes、wipe、zoom、honeycomb）、Wallhaven 整合
-- **登入介面 (Greeter)** — 原生整合 `Noctalia Greeter`，支援密碼解鎖 Gnome Keyring，並與桌面外殼無縫同步桌布、配色、毛玻璃透明度與頭像
+- **鎖定與認證** — 整合 `hyprlock`（Tokyo Night 配色）與 Getty 靜默登入，開機直達鎖定畫面驗證，原生支援 PAM 認證與動態毛玻璃背景
 - **鎖定畫面** — 模糊 + 色調、倒數計時、可選媒體控制、閒置 5 分鐘調暗、16 分鐘自動鎖定
 - **動態色彩方案** — 桌布產生的 Material You 色彩，同步至 GTK、niri 聚焦環與終端機（透過範本）
 - **夜燈** — 手動或自動排程色溫（夜間 4300 K / 日間 3800 K）
@@ -290,7 +290,9 @@ nixos-config/
 2. 啟動安裝程式（Calamares）：
    - **安裝類型**：選擇 **Minimal**（最小化安裝，無預設桌面）。
    - **磁碟分割**：建議使用 **btrfs**（`/boot` 設 FAT32 1GB，剩餘空間分給 `/`，`swap` 建議 ≥ RAM 容量以支援休眠）。
-   - **使用者名稱**：預設為 `AnyNeko`（可於配置中調整）。
+   - **使用者名稱**：
+     - **姓名 / 全名 (Full Name)**：`AnyNeko`（UI 顯示名稱）
+     - **登入使用者名稱 (Username)**：`anyneko`（**全小寫**，與底層系統配置嚴格對齊）
 3. 安裝完成後重啟進入系統。
 
 ### 2. 連線網路
@@ -303,20 +305,25 @@ nmcli device wifi connect <SSID> password <密碼>
 ping -c 3 nixos.org
 ```
 
-### 3. 套用配置
+### 3. 套用配置（一鍵部署腳本）
+
+進入系統後，直接使用倉庫內建的 `install.sh` 腳本進行部署。該腳本會自動同步本機硬體配置（`/etc/nixos/hardware-configuration.nix`）、更新 Flake 鎖定檔（`nix flake update`）、暫存檔案並完成系統構建切換：
 
 ```bash
-# 安裝 git 並複製配置
+# 安裝 git（若尚未安裝）
 sudo nix-env -iA nixos.git
+
+# 複製配置並執行部署腳本
 git clone https://github.com/LycorisNeko/nixos-config.git ~/nixos-config
 cd ~/nixos-config
-
-# 產生硬體配置並覆蓋現有檔案
-sudo nixos-generate-config --show-hardware-config > hardware-configuration.nix
-
-# 建構並套用系統配置
-sudo nixos-rebuild switch --flake .#nixos
+./install.sh
 ```
+
+> **說明**：
+> - 腳本提示全程採用**英文字元**，避免初次安裝缺少中文字型時在 TTY 出現方塊亂碼。
+> - 腳本內建 `nix flake update` 步驟，自動更新並確保依賴鎖定檔 (`flake.lock`) 最適化。
+> - 部署成功後重啟電腦（`systemctl reboot`），系統將自動啟動並呈現 Hyprlock 鎖屏，輸入你的密碼即可進入 Niri 桌面。
+> - 若鎖定畫面未顯示頭像，可將頭像圖片命名為 `.face` 並放入家目錄（`~/.face`）。
 
 > **提示**：若鎖定畫面/登入頁未顯示頭像，可將頭像圖片重命名為 `.face` 並放入家目錄（`~/.face`）。
 

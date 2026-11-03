@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-# ANSI Colors
+# ANSI Color definitions
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
@@ -9,46 +9,44 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 echo -e "${BLUE}=======================================${NC}"
-echo -e "${BLUE}    NixOS Deployment Script (install.sh)${NC}"
+echo -e "${BLUE}  NixOS One-Click Deployment Script    ${NC}"
 echo -e "${BLUE}=======================================${NC}"
 
-# Navigate to the script's directory (repo root)
+# Get the directory of this script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# 1. Sync hardware configuration
-echo -e "${GREEN}[1/4] Checking hardware configuration...${NC}"
+# 1. Sync hardware-configuration.nix
 if [ -f "/etc/nixos/hardware-configuration.nix" ]; then
-    echo -e "  Copying /etc/nixos/hardware-configuration.nix -> ./hardware-configuration.nix"
+    echo -e "${GREEN}[1/4] Syncing hardware configuration...${NC}"
     cp /etc/nixos/hardware-configuration.nix ./hardware-configuration.nix
+    echo -e "  Successfully copied /etc/nixos/hardware-configuration.nix to repository."
 else
-    echo -e "${YELLOW}  [WARN] /etc/nixos/hardware-configuration.nix not found.${NC}"
+    echo -e "${YELLOW}[WARNING] /etc/nixos/hardware-configuration.nix not found.${NC}"
     if [ -f "./hardware-configuration.nix" ]; then
-        echo -e "  Using existing ./hardware-configuration.nix from repository."
+        echo -e "  Using existing hardware-configuration.nix in repository."
     else
-        echo -e "${RED}  [ERROR] No hardware-configuration.nix found. Aborting!${NC}"
+        echo -e "${RED}[ERROR] No hardware-configuration.nix found, aborting!${NC}"
         exit 1
     fi
 fi
 
-# 2. Update flake.lock
-echo -e "${GREEN}[2/4] Updating flake lock (nix flake update)...${NC}"
-nix flake update --extra-experimental-features "nix-command flakes" || {
-    echo -e "${YELLOW}  [WARN] 'nix flake update' encountered an issue, continuing with existing flake.lock...${NC}"
-}
+# 2. Update Nix Flake inputs (flake.lock)
+echo -e "${GREEN}[2/4] Updating Nix Flake lock (flake.lock)...${NC}"
+nix --extra-experimental-features "nix-command flakes" flake update
 
-# 3. Stage changes to Git
-echo -e "${GREEN}[3/4] Staging configuration files to Git...${NC}"
+# 3. Stage changes to Git (Nix Flakes only recognizes tracked files)
+echo -e "${GREEN}[3/4] Staging all changes to Git...${NC}"
 git add -A
-echo -e "  All files staged."
+echo -e "  All configuration files and lock updates staged."
 
-# 4. Build and switch NixOS configuration
-echo -e "${GREEN}[4/4] Building and switching NixOS configuration...${NC}"
-echo -e "${YELLOW}  (Enter sudo password if prompted)${NC}"
-sudo nixos-rebuild switch --flake .#
+# 4. Rebuild and switch NixOS configuration
+echo -e "${GREEN}[4/4] Building and applying NixOS configuration...${NC}"
+echo -e "${YELLOW}Notice: Please enter your sudo password if prompted.${NC}"
+sudo nixos-rebuild switch --flake .# --extra-experimental-features "nix-command flakes"
 
 echo -e "${GREEN}=======================================${NC}"
-echo -e "${GREEN}  NixOS Deployment Completed!          ${NC}"
+echo -e "${GREEN}  NixOS Deployment Complete!           ${NC}"
 echo -e "${GREEN}=======================================${NC}"
-echo -e "You can now reboot your system:"
+echo -e "You can now reboot into your new environment:"
 echo -e "  ${BLUE}systemctl reboot${NC}"
