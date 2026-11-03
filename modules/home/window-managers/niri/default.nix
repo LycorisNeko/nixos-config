@@ -295,7 +295,6 @@ in
           matches = [
             { app-id = "^(code|Code)$"; }
             { app-id = "^(postman|Postman)$"; }
-            { app-id = "^(antigravity-tools|com\\.lbjlaq\\.antigravity-tools)$"; }
           ];
           opacity = 0.94;
           draw-border-with-background = false;

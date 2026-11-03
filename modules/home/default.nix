@@ -34,7 +34,6 @@
     ./motrix/default.nix
     ./android-studio/default.nix
     ./vscode/default.nix
-    ./antigravity-manager/default.nix
   ];
 
 
