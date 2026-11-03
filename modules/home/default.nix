@@ -71,8 +71,8 @@
     continue = on
   '';
 
-  home.username = "AnyNeko";
-  home.homeDirectory = "/home/AnyNeko";
+  home.username = "anyneko";
+  home.homeDirectory = "/home/anyneko";
   home.stateVersion = "25.11";
 
 }

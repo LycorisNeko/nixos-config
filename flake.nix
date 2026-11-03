@@ -83,7 +83,7 @@
                 inherit nixvim inputs;
               };
 
-              users.AnyNeko = import ./modules/home/default.nix;
+              users.anyneko = import ./modules/home/default.nix;
               backupFileExtension = "backup";
 
               sharedModules = [

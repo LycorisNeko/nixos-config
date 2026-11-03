@@ -3,8 +3,8 @@
   # 1. 啟用系統級 Niri 視窗管理器
   programs.niri.enable = true;
 
-  # 2. 認證與登入配置 (方案 A: TTY 自動登入 AnyNeko，桌面由 hyprlock 進行密碼驗證)
-  services.getty.autologinUser = "AnyNeko";
+  # 2. 認證與登入配置 (方案 A: TTY 自動登入 anyneko，桌面由 hyprlock 進行密碼驗證)
+  services.getty.autologinUser = "anyneko";
   security.pam.services.hyprlock = {};
   services.gnome.gnome-keyring.enable = true;
 
@@ -53,11 +53,11 @@
     '';
     ensureDatabases = [
       "mydb"
-      "AnyNeko"
+      "anyneko"
     ];
     ensureUsers = [
       {
-        name = "AnyNeko";
+        name = "anyneko";
         ensureDBOwnership = true;
       }
     ];

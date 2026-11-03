@@ -2,10 +2,10 @@
 {
   programs.fish.enable = true;
 
-  users.users.AnyNeko = {
+  users.users.anyneko = {
     isNormalUser = true;
     description = "AnyNeko";
-    group = "AnyNeko"; # 明确指定主组名称
+    group = "anyneko"; # 明确指定主组名称
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -23,5 +23,5 @@
   };
 
   # 建立对应的同名主组
-  users.groups.AnyNeko = {};
+  users.groups.anyneko = {};
 }
