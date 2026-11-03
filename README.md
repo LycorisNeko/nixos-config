@@ -207,21 +207,22 @@
 | `Mod + ,` / `Mod + .` | 上一首 / 下一首 |
 | `XF86Audio*` | 音量控制 / 靜音（鎖定畫面亦可用） |
 | `XF86Brightness*` | 亮度調節（鎖定畫面亦可用） |
-| `Shift_L` / `Ctrl + Space` | 切換輸入法 (fcitx5 拼音) |
+| `Shift` (左/右) / `Ctrl + Space` / `Ctrl + Shift` | 切換輸入法 (Windows 習慣，預設拼音) |
 
-### 輸入法切換快捷鍵 (Fcitx5)
+### 輸入法切換快捷鍵 (Fcitx5 - Windows 體驗)
 
-- **單按左 Shift (`Shift_L`)**：設定在 `Hotkey/AltTriggerKeys`，點按即可在中英文之間切換。
-- **`Ctrl + Space` (`Control+space`)**：保留為全局輸入法切換 / 激活鍵（`Hotkey/TriggerKeys`）。
-- **`Ctrl + Shift` (`Control+Shift_L`)**：循環切換輸入法（`Hotkey/EnumerateForwardKeys`）。
+系統採用與 **Windows 相同的輸入法習慣**，並**預設開機與開啟新視窗時啟動拼音**：
+
+- **預設啟動拼音**：`ActiveByDefault = True` 且首位輸入法為拼音，全域共享輸入狀態（`ShareInputState = All`）。新開啟視窗直接進入中文拼音，無須先喚醒。
+- **單按 Shift（左 Shift `Shift_L` 或右 Shift `Shift_R`）**：在當前拼音輸入法內部切換**中 / 英文模式**（Windows 體驗，單按即切換英文字母直出與中文拼音候選）。
+- **`Ctrl + Space` (`Control+space`)**：全局輸入法激活 / 切換鍵（Windows 經典熱鍵）。
+- **`Ctrl + Shift` (`Control+Shift`)**：在輸入法之間循環切換（拼音 ↔ 美式英文鍵盤，Windows 經典語言輪換熱鍵）。
 
 > [!NOTE]
-> **切換快捷鍵修復**：
-> - **原因**：先前直接將 `Shift_L` 填入 `Hotkey/TriggerKeys`。在 fcitx5 中，單按修飾鍵（如左 Shift）切換中英文必須使用專屬的 `Hotkey/AltTriggerKeys`，若直接填入 `TriggerKeys` 會被當成組合鍵前綴而無法正確觸發單鍵切換。
-> - **修復**：
->   - 單按左 Shift（`Shift_L`）：設定在 `Hotkey/AltTriggerKeys`，點按即可在中英文之間切換。
->   - Ctrl + 空格（`Control+space`）：保留為全局輸入法切換 / 激活鍵（`Hotkey/TriggerKeys`）。
->   - Ctrl + Shift（`Control+Shift_L`）：循環切換輸入法（`Hotkey/EnumerateForwardKeys`）。
+> **輸入法修復與優化細節**：
+> 1. **預設拼音與修飾鍵激活**：Fcitx5 原生機制下，若預設為英文鍵盤且處於 Inactive 狀態，單按 Shift（`AltTriggerKeys`）會因未激活而失效。現已設定 `ActiveByDefault = True` 並將拼音置於第一位，保證開機即用、按 Shift 立即切換中英文。
+> 2. **修飾鍵逾時優化**：設置 `ModifierOnlyKeyTimeout = 500`ms，避免單按 Shift 判定過於嚴苛而漏觸發。
+> 3. **完整模組整合**：補全 `fcitx5-gtk` 與 `qt6Packages.fcitx5-qt` 模組，確保 GTK 與 Qt 應用程式均能完整呼叫輸入法。
 
 ---
 
