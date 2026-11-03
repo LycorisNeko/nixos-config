@@ -71,8 +71,13 @@
         xcursor_size = "24";
       };
 
-      # 新版 niri-flake 語法：明確關閉左上角觸發熱區
-      gestures.hot-corners.top-left = false;
+      # 關閉所有觸發熱區 (niri-flake 要求若設定 hot-corners 必須宣告全部四個角)
+      gestures.hot-corners = {
+        top-left = false;
+        top-right = false;
+        bottom-left = false;
+        bottom-right = false;
+      };
 
       # 顯示器縮放（DP-1 為目前 4K 螢幕）
       outputs."DP-1".scale = 1.25;
