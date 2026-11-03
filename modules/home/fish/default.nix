@@ -10,8 +10,10 @@
     '';
 
     loginShellInit = ''
-      if test -z "$DISPLAY" -a -z "$WAYLAND_DISPLAY" -a (tty) = "/dev/tty1"
-        exec niri-session
+      if status is-interactive
+        if test -z "$DISPLAY" -a -z "$WAYLAND_DISPLAY" -a (tty) = "/dev/tty1"
+          exec niri-session -l
+        end
       end
     '';
 

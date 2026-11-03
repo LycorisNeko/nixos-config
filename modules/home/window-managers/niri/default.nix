@@ -193,6 +193,13 @@ in
             "--replace"
           ];
         }
+        {
+          command = [
+            "${pkgs.bash}/bin/bash"
+            "-c"
+            "noctalia-sync || true"
+          ];
+        }
         { command = [ "hyprlock" ]; }
         { command = [ "noctalia" ]; }
         {
@@ -712,7 +719,9 @@ in
           "nightlight-toggle"
         ];
         "Mod+Shift+L".action.spawn = [
-          "hyprlock"
+          "${pkgs.bash}/bin/bash"
+          "-c"
+          "noctalia-sync || true; exec hyprlock"
         ];
 
         # Media

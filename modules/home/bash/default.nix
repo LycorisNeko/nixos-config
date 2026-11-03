@@ -14,9 +14,9 @@
         if [ -f "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" ]; then
           source "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
         fi
-      fi
-      if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
-        exec niri-session
+        if [ -z "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+          exec niri-session -l
+        fi
       fi
     '';
 

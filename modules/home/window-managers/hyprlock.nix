@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs.hyprlock = {
     enable = true;
@@ -16,7 +16,8 @@
       background = [
         {
           monitor = "";
-          path = "screenshot";
+          path = "${config.home.homeDirectory}/.cache/current_wallpaper.png";
+          color = "rgba(25, 20, 20, 1.0)";
           blur_passes = 3;
           blur_size = 7;
           brightness = 0.5;
@@ -72,7 +73,7 @@
         # Caps Lock warning
         {
           monitor = "";
-          text = "$CAPS";
+          text = ''cmd[update:250] grep -q '[1-9]' /sys/class/leds/*capslock*/brightness 2>/dev/null && echo "󰪛 Caps Lock is ON" || echo ""'';
           color = "rgba(255, 117, 127, 1.0)"; # red #ff757f
           font_size = 14;
           font_family = "JetBrainsMono Nerd Font Bold";
@@ -86,7 +87,7 @@
       image = [
         {
           monitor = "";
-          path = "$HOME/.face"; # put a .face image in your home dir
+          path = "${config.home.homeDirectory}/.face";
           size = 100;
           rounding = -1; # fully circular
           border_size = 3;
