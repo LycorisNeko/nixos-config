@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-# ANSI 颜色定义
+# ANSI Colors
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
@@ -9,40 +9,46 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 echo -e "${BLUE}=======================================${NC}"
-echo -e "${BLUE}  NixOS 一键配置部署脚本 (install.sh)   ${NC}"
+echo -e "${BLUE}    NixOS Deployment Script (install.sh)${NC}"
 echo -e "${BLUE}=======================================${NC}"
 
-# 获取脚本所在根目录
+# Navigate to the script's directory (repo root)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# 1. 检查并复制硬件配置
+# 1. Sync hardware configuration
+echo -e "${GREEN}[1/4] Checking hardware configuration...${NC}"
 if [ -f "/etc/nixos/hardware-configuration.nix" ]; then
-    echo -e "${GREEN}[1/3] 正在同步硬件配置文件...${NC}"
+    echo -e "  Copying /etc/nixos/hardware-configuration.nix -> ./hardware-configuration.nix"
     cp /etc/nixos/hardware-configuration.nix ./hardware-configuration.nix
-    echo -e "  已从 /etc/nixos/hardware-configuration.nix 复制到当前仓库。"
 else
-    echo -e "${YELLOW}[警告] 未在 /etc/nixos/ 中找到 hardware-configuration.nix。${NC}"
+    echo -e "${YELLOW}  [WARN] /etc/nixos/hardware-configuration.nix not found.${NC}"
     if [ -f "./hardware-configuration.nix" ]; then
-        echo -e "  将使用仓库内现有的 hardware-configuration.nix。"
+        echo -e "  Using existing ./hardware-configuration.nix from repository."
     else
-        echo -e "${RED}[错误] 未找到任何有效的 hardware-configuration.nix，构建中止！${NC}"
+        echo -e "${RED}  [ERROR] No hardware-configuration.nix found. Aborting!${NC}"
         exit 1
     fi
 fi
 
-# 2. 将修改暂存到 Git (Nix Flakes 仅读取被 Git 跟踪的文件)
-echo -e "${GREEN}[2/3] 暂存配置到 Git...${NC}"
-git add -A
-echo -e "  所有配置文件已暂存。"
+# 2. Update flake.lock
+echo -e "${GREEN}[2/4] Updating flake lock (nix flake update)...${NC}"
+nix flake update --extra-experimental-features "nix-command flakes" || {
+    echo -e "${YELLOW}  [WARN] 'nix flake update' encountered an issue, continuing with existing flake.lock...${NC}"
+}
 
-# 3. 执行系统级构建
-echo -e "${GREEN}[3/3] 开始执行 nixos-rebuild switch...${NC}"
-echo -e "${YELLOW}提示: 如果提示密码，请输入当前用户的 sudo 密码。${NC}"
+# 3. Stage changes to Git
+echo -e "${GREEN}[3/4] Staging configuration files to Git...${NC}"
+git add -A
+echo -e "  All files staged."
+
+# 4. Build and switch NixOS configuration
+echo -e "${GREEN}[4/4] Building and switching NixOS configuration...${NC}"
+echo -e "${YELLOW}  (Enter sudo password if prompted)${NC}"
 sudo nixos-rebuild switch --flake .#
 
 echo -e "${GREEN}=======================================${NC}"
-echo -e "${GREEN}  NixOS 系统部署完成！                  ${NC}"
+echo -e "${GREEN}  NixOS Deployment Completed!          ${NC}"
 echo -e "${GREEN}=======================================${NC}"
-echo -e "你可以重启电脑享受全新的桌面环境："
+echo -e "You can now reboot your system:"
 echo -e "  ${BLUE}systemctl reboot${NC}"
