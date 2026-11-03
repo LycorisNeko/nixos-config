@@ -45,7 +45,7 @@ echo -e "  Flake lock updated and staged locally."
 # 4. Rebuild and switch NixOS configuration
 echo -e "${GREEN}[4/4] Building and applying NixOS configuration...${NC}"
 echo -e "${YELLOW}Notice: Please enter your sudo password if prompted.${NC}"
-sudo nixos-rebuild switch --flake .# --extra-experimental-features "nix-command flakes"
+sudo nixos-rebuild switch --flake .#
 
 echo -e "${GREEN}=======================================${NC}"
 echo -e "${GREEN}  NixOS Deployment Complete!           ${NC}"
