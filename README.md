@@ -403,6 +403,8 @@ sudo btrfs inspect-internal map-swapfile -r /swap/swapfile   # 取得 btrfs swap
 # 在 modules/system/boot.nix 的 boot.kernelParams 加入：
 #   "resume=UUID=<swap 的 UUID>"
 #   "resume_offset=<btrfs map-swapfile 的輸出>"
+# 安装VMtools
+sudo nix-shell -p open-vm-tools --run "systemctl start open-vm-tools"
 ```
 
 ## 疑難排解
