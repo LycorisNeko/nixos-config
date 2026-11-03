@@ -606,6 +606,11 @@
           "niri-screenshot.sh"
           "screen"
         ];
+        "Print".action.spawn = [ "niri-screenshot.sh" ];
+        "Shift+Print".action.spawn = [
+          "niri-screenshot.sh"
+          "screen"
+        ];
 
         # Window management
         "Mod+C".action.close-window = { };
@@ -630,14 +635,18 @@
 
         "Mod+Home".action.focus-column-first = { };
         "Mod+End".action.focus-column-last = { };
-        "Mod+BracketRight".action.focus-column-first = { };
-        "Mod+BracketLeft".action.focus-column-last = { };
+        "Mod+BracketLeft".action.focus-column-first = { };
+        "Mod+BracketRight".action.focus-column-last = { };
 
         # Move windows
         "Mod+Ctrl+H".action.move-column-left = { };
         "Mod+Ctrl+L".action.move-column-right = { };
         "Mod+Ctrl+J".action.move-window-down = { };
         "Mod+Ctrl+K".action.move-window-up = { };
+        "Mod+Ctrl+Left".action.move-column-left = { };
+        "Mod+Ctrl+Right".action.move-column-right = { };
+        "Mod+Ctrl+Down".action.move-window-down = { };
+        "Mod+Ctrl+Up".action.move-window-up = { };
 
         # Resize
         "Mod+Shift+Right".action.set-column-width = "+80";

@@ -168,8 +168,8 @@
 | `Mod + Shift + ,` | Noctalia 設定面板 |
 | `Mod + W` | 桌布挑選器 |
 | `Mod + V` | 剪貼簿歷史 (noctalia) |
-| `Mod + S` | 區域截圖 |
-| `Mod + Shift + S` | 全螢幕截圖 |
+| `Mod + S` / `Print` | 區域截圖 |
+| `Mod + Shift + S` / `Shift + Print` | 全螢幕截圖 |
 | `Mod + Escape` | 工作階段選單 |
 
 ### 視窗管理
@@ -188,7 +188,7 @@
 | `Mod + J/K` 或 `Mod + ↑/↓` | 聚焦上/下視窗 |
 | `Mod + Home` / `Mod + [` | 聚焦首欄 |
 | `Mod + End` / `Mod + ]` | 聚焦末欄 |
-| `Mod + Ctrl + H/L/J/K` | 移動欄位/視窗 |
+| `Mod + Ctrl + H/L/J/K` 或 `Mod + Ctrl + ←/→/↑/↓` | 移動欄位/視窗 |
 | `Mod + Shift + ←/→` | 調整欄位寬度 (-/+ 80px) |
 | `Mod + Shift + ↑/↓` | 調整視窗高度 (-/+ 80px) |
 | `Mod + 1–9, 0` | 切換工作區 (1–10) |
@@ -198,7 +198,7 @@
 
 | 快捷鍵 | 動作 |
 |---|---|
-| `Mod + Shift + L` | 鎖定畫面 (Noctalia Lock) |
+| `Mod + Shift + L` | 鎖定畫面 (hyprlock) |
 | `Mod + Shift + M` | 結束 niri |
 | `Mod + Shift + B` | 切換工具列 (Bar Toggle) |
 | `Mod + Shift + N` | 切換夜燈 (Night Light Toggle) |
@@ -207,7 +207,7 @@
 | `Mod + ,` / `Mod + .` | 上一首 / 下一首 |
 | `XF86Audio*` | 音量控制 / 靜音（鎖定畫面亦可用） |
 | `XF86Brightness*` | 亮度調節（鎖定畫面亦可用） |
-| `Shift_L` | 切換輸入法 (fcitx5 拼音) |
+| `Shift_L` / `Ctrl + Space` | 切換輸入法 (fcitx5 拼音) |
 
 ---
 
