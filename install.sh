@@ -36,9 +36,11 @@ echo -e "${GREEN}[2/4] Staging hardware configuration to Git...${NC}"
 git add -A
 echo -e "  Hardware configuration staged."
 
-# 3. Update Nix Flake inputs (with verbose output to monitor progress)
+# 3. Update Nix Flake inputs (with verbose output, local stage only)
 echo -e "${GREEN}[3/4] Updating Nix Flake lock (flake.lock)...${NC}"
-nix --extra-experimental-features "nix-command flakes" flake update -v --commit-lock-file
+nix --extra-experimental-features "nix-command flakes" flake update -v
+git add flake.lock
+echo -e "  Flake lock updated and staged locally."
 
 # 4. Rebuild and switch NixOS configuration
 echo -e "${GREEN}[4/4] Building and applying NixOS configuration...${NC}"
