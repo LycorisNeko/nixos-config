@@ -12,14 +12,10 @@
       "video"
       "audio"
       "docker"
-      "wireshark"
       "scanner" # SANE 扫描仪访问权限
       "lp"      # 打印机与复合扫描设备权限
       "libvirtd"
       "kvm"
-      "qemu-libvirtd"
-      "adbusers" # Android USB 调试与设备访问权限
-      "usbmux"   # iPhone/iPad USB 通信权限
     ];
     # shell = pkgs.bash;
     shell = pkgs.fish;

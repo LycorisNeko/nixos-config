@@ -57,8 +57,7 @@
 | 虛擬化 | Docker、virt-manager/QEMU/KVM |
 | 資料庫 | PostgreSQL 17 |
 | 打印 | CUPS、`epson-escpr`、`epson-escpr2`、`system-config-printer` |
-| AI | Ollama (ROCm, llama3.1:8b)、LM Studio、Claude Code、Google Antigravity CLI (`agy`)、Antigravity Tools (`antigravity-manage`) |
-| 安全工具 | Burp Suite Professional |
+| AI | Ollama (ROCm, llama3.1:8b)、LM Studio、Claude Code、DeepSeek Harness、Google Antigravity CLI (`agy`)、Antigravity Tools (`antigravity-manage`) |
 | 音樂 | 網易雲音樂 (netease-cloud-music-gtk) |
 | 媒體 | MPV、OBS Studio |
 | 3D 建模 | Blender (AMD HIP/ROCm GPU 加速) |
@@ -137,12 +136,11 @@
 | [btop](https://github.com/aristocratos/btop) / htop | 資源監控 |
 | [tmux](https://github.com/tmux/tmux) | 終端機多工器 |
 | [starship](https://starship.rs) | 跨 Shell 提示字元 |
-| [wireshark](https://www.wireshark.org) | 網路封包分析（系統級配置 Linux Capabilities，支援免 root 側錄） |
 | bat | 語法高亮的 cat 替代品 |
 | cava | 音訊視覺化 |
 | [agy](https://antigravity.google) | Google Antigravity CLI（終端智慧代理客戶端） |
 | [claude-code](https://github.com/sadjow/claude-code-nix) | Anthropic Claude Code AI 終端輔助工具 |
-| [claude-desktop](https://claude.ai) | Anthropic Claude 官方 Linux 桌面版（Wayland / fcitx5 支援） |
+| [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | DeepSeek Harness 開源 Agent 桌面版（`dsh-desktop`，Wayland / fcitx5 支援） |
 | [antigravity-tools](https://github.com/lbjlaq/Antigravity-Manager) | Antigravity 帳號管理、額度監控與本地代理（指令別名：`antigravity-manage`、`at`） |
 
 ### 遊戲與轉譯層
@@ -247,7 +245,7 @@ nixos-config/
     │   ├── motrix/               # Motrix 下載管理員
     │   ├── qq/                   # QQ Linux 桌面版
     │   ├── wechat/               # WeChat 客户端
-    │   ├── claude-desktop/       # Claude Linux 桌面版
+    │   ├── deepseek-harness/     # DeepSeek Harness 桌面版
     │   ├── antigravity-manager/  # Antigravity Tools 帳號管理與多模型本地代理
     │   ├── discord/              # Discord (Vencord)
     │   ├── chrome/               # 瀏覽器配置
@@ -264,7 +262,6 @@ nixos-config/
     │   │   └── shells/           # 開發環境定義
     │   ├── packages.nix          # 使用者套件（Blender, HMCL, Obsidian, 網易雲, Telegram, Claude Code, Antigravity CLI）
     │   ├── tools.nix             # CLI 工具 (zoxide, atuin, eza)
-    │   ├── flake-pkgs.nix        # Flake 衍生套件 (Burp Suite Pro)
     │   ├── deploy-files.nix      # 部署檔案
     │   ├── xdg-portal.nix        # XDG Portal 設定
     │   └── features/             # 功能模組 (截圖)
@@ -313,7 +310,7 @@ ping -c 3 nixos.org
 ```bash
 # 安裝 git 並複製配置
 sudo nix-env -iA nixos.git
-git clone https://github.com/AnyNeko/nixos-config ~/nixos-config
+git clone https://github.com/LycorisNeko/nixos-config.git ~/nixos-config
 cd ~/nixos-config
 
 # 產生硬體配置並覆蓋現有檔案

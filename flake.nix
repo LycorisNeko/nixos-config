@@ -41,13 +41,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    claude-desktop = {
-      url = "github:poeck/claude-desktop-nix-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    burpsuitepro = {
-      url = "github:xiv3r/Burpsuite-Professional";
+    deepseek-harness = {
+      url = "github:moraxyc/deepseek-harness.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -59,8 +54,7 @@
       nixvim,
       nur,
       claude-code,
-      claude-desktop,
-      burpsuitepro,
+      deepseek-harness,
       ...
     }:
     {
@@ -80,7 +74,7 @@
               nixpkgs.overlays = [
                 nur.overlays.default
                 claude-code.overlays.default
-                claude-desktop.overlays.default
+                deepseek-harness.overlays.default
               ];
             }
           )

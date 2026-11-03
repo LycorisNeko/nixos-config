@@ -22,7 +22,7 @@
 
   # UEFI firmware symlink fix
   systemd.tmpfiles.rules = [
-    "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware"
+    "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu_kvm}/share/qemu/firmware"
   ];
 
   environment.systemPackages = with pkgs; [

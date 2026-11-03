@@ -13,9 +13,9 @@
       package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
-      name = "Bibata-Modern-Classic";
+      name = "Bibata-Modern-Ice";
       package = pkgs.bibata-cursors;
-      size = 32;
+      size = 24;
     };
   };
 
@@ -27,9 +27,9 @@
 
   home.pointerCursor = {
     enable = true;
-    name = "Bibata-Modern-Classic";
+    name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
-    size = 32;
+    size = 24;
     gtk.enable = true;
     x11.enable = true;
   };

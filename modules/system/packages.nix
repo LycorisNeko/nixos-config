@@ -24,12 +24,6 @@
 
     docker-compose
 
-    # iPhone/iPad 管理与刷机工具（需设备信任此电脑）
-    libimobiledevice
-    ideviceinstaller
-    idevicerestore
-    ifuse
-
     wl-clipboard
     brightnessctl
     playerctl

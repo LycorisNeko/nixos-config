@@ -29,13 +29,12 @@
     ./file-roller/default.nix
     ./fish/default.nix
     ./deploy-files.nix
-    ./flake-pkgs.nix
     ./devshell/default.nix
     ./mpv/default.nix
     ./motrix/default.nix
     ./android-studio/default.nix
     ./vscode/default.nix
-    ./claude-desktop/default.nix
+    ./deepseek-harness/default.nix
     ./antigravity-manager/default.nix
   ];
 

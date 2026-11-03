@@ -40,9 +40,6 @@
   services.power-profiles-daemon.enable = true;
   services.tailscale.enable = true;
 
-  # iPhone/iPad USB 通信服务
-  services.usbmuxd.enable = true;
-
   programs.thunar.enable = true;
   services.gvfs.enable = true;
   services.tumbler.enable = true;
@@ -76,16 +73,9 @@
     ];
   };
 
-  # 5. 打印服務 (CUPS) 與 Epson 驱动（仅本地，关闭 Web UI 并移除网页快捷方式）
+  # 5. 打印服務 (CUPS) 與 Epson 驱动（仅本地，关闭 Web UI）
   services.printing = {
     enable = true;
-    package = pkgs.symlinkJoin {
-      name = "cups";
-      paths = [ pkgs.cups.out ];
-      postBuild = ''
-        rm -f $out/share/applications/cups.desktop
-      '';
-    };
     webInterface = false; # 禁用 CUPS Web UI
     drivers = with pkgs; [
       epson-escpr
