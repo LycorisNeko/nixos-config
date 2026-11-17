@@ -50,11 +50,18 @@
   # 静默开机配置：隐藏终端日志输出与 initrd 冗余信息
   boot.consoleLogLevel = 0;
 
-  # Early KMS: 在 initrd 阶段尽早加载 AMD 显卡驱动，确保 Plymouth 流畅无闪烁渲染
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  # Early KMS: 在 initrd 阶段尽早加载 NVIDIA 显卡驱动，确保 Plymouth 流畅无闪烁渲染
+  boot.initrd.kernelModules = [
+    "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"
+    # 傲腾持久内存 (Intel Optane PMEM) 支持
+    "nd_pmem" "nd_btt" "dax_pmem" "libnvdimm"
+  ];
 
   boot.kernelParams = [
     "btusb.enable_autosuspend=0"
+    # NVIDIA DRM KMS（Wayland / Hyprland / Niri 必须）
+    "nvidia-drm.modeset=1"
+    "nvidia-drm.fbdev=1"
     # 静默开机参数：隐藏内核跑码、systemd 服务启动日志与终端闪烁光标
     "quiet"
     "splash"
@@ -65,7 +72,7 @@
     "udev.log_priority=3"
     "systemd.show_status=false"
     "vt.global_cursor_default=0"
-    # 彻底禁用主板厂商 (Dell) ACPI BGRT OEM 开机 Logo
+    # 彻底禁用主板厂商 (技嘉) ACPI BGRT OEM 开机 Logo
     "bgrt_disable"
     "video=efifb:nobgrt"
   ];

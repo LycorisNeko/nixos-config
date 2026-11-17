@@ -116,11 +116,10 @@
           dots_center = true;
           dots_rounding = -1;
 
-          outer_color = "rgba(130, 170, 255, 0.5)"; # 柔和通透边框 (50% 不透明度)
-          inner_color = "rgba(34, 36, 54, 0.65)"; # 舒适磨砂毛玻璃透光 (65% 不透明度)
+          outer_color = "rgba(130, 170, 255, 0.6)"; # 柔和通透边框 (60% 不透明度)
+          inner_color = "rgba(34, 36, 54, 0.75)"; # 舒适磨砂毛玻璃透光 (75% 不透明度，确保清晰常驻)
           font_color = "rgba(200, 211, 245, 1.0)"; # text #c8d3f5
-          fade_on_empty = true;
-          fade_timeout = 1000;
+          fade_on_empty = false; # 禁止无输入时淡出隐藏，开机与锁屏时常驻可见
 
           placeholder_text = ''<span foreground="##828bb8"> Password...</span>'';
           hide_input = false;

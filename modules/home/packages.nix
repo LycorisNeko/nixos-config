@@ -19,7 +19,7 @@
     zathura
 
     # Apps consolidated from single-file modules
-    (blender.override { rocmSupport = true; })
+    (blender.override { cudaSupport = true; }) # NVIDIA RTX 4090
     hmcl
     obsidian
     netease-cloud-music-gtk

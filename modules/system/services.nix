@@ -9,6 +9,7 @@
   services.gnome.gnome-keyring.enable = true;
 
   # 3. 硬體與系統服務配置
+  # 技嘉 MU72-SU0 服务器主板无内置电源管理设备，upower 仅作 UPS 检测兜底
   services.upower.enable = true;
   hardware.bluetooth = {
     enable = true;
@@ -27,7 +28,8 @@
 
   services.blueman.enable = true;
   hardware.enableAllFirmware = true;
-  services.power-profiles-daemon.enable = true;
+  # 服务器平台禁用 power-profiles-daemon（与 cpuFreqGovernor = "performance" 冲突）
+  services.power-profiles-daemon.enable = false;
   services.tailscale.enable = true;
 
   programs.thunar.enable = true;
@@ -114,19 +116,19 @@
 
   # Epson WF-C5890 USB 专属 udev 规则：确保设备节点分配至 lp/scanner 组，并唤起 ipp-usb 服务
   # 睡眠防秒醒 udev 规则：
-  # - 默认禁用所有 USB 设备的唤醒功能（有线鼠标晃动、蓝牙控制器、麦克风等）
+  # - 默认禁用所有 USB 设备的唤醒功能
   # - 白名单放行：仅保留 2.4G 无线键盘接收器（Compx 3554:fa09）与电源键唤醒
-  # - 禁用有线网卡 enp0s31f6 的设备唤醒属性
+  # - 技嘉 MU72-SU0 服务器主板无内置有线网卡唤醒问题，无需禁用 enp0s31f6
   services.udev.extraRules = ''
     ATTRS{idVendor}=="04b8", ATTRS{idProduct}=="11b6", MODE="0664", GROUP="lp", ENV{libsane_matched}="yes", TAG+="systemd", ENV{SYSTEMD_WANTS}+="ipp-usb.service"
     ACTION=="add|change", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{power/wakeup}="disabled"
     ACTION=="add|change", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="3554", ATTRS{idProduct}=="fa09", ATTR{power/wakeup}="enabled"
-    ACTION=="add|change", SUBSYSTEM=="net", NAME=="enp0s31f6", ATTR{device/power/wakeup}="disabled"
   '';
 
   # 7. 解决睡眠秒醒问题（斩草除根仅保留键盘与电源键）：
   # - 确保 PWRB（机箱电源键）与 XHCI（USB 控制器，承载键盘唤醒）处于启用状态
-  # - 斩草除根：禁用所有多余的 ACPI 唤醒设备（包括 Broadcom WiFi 网卡 PXSX/RP09、Intel 有线网 GBE1、AMD 显卡 PEGP、NVMe BR2D 等）
+  # - 斩草除根：禁用所有多余的 ACPI 唤醒设备（NVIDIA 显卡 PEGP、NVMe 等 PCIe 设备）
+  # - 技嘉 MU72-SU0 实际 ACPI 唤醒表以 nixos-rebuild 后 cat /proc/acpi/wakeup 为准
   # - 兜底扫描 sysfs USB 节点：确保仅 3554:fa09 键盘处于 enabled，鼠标与蓝牙等外设全部处于 disabled
   systemd.services.disable-acpi-wakeup = {
     description = "Configure system sleep wakeup sources (keep only keyboard and power button)";

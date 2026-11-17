@@ -2,6 +2,7 @@
 {
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  # 技嘉 MU72-SU0 服务器主板无内置 WiFi，此项无实际作用但无害
   networking.networkmanager.wifi.powersave = false;
 
   # 禁用以太网 Wake-on-LAN，防止局域网 ARP 与广播包唤醒电脑
