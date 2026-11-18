@@ -51,16 +51,16 @@
 | 游標 | bibata_cursors |
 | 字型 | JetBrainsMono Nerd Font、Fira Code Nerd Font、Hack Nerd Font、Noto Sans CJK（預設中文字型）、LXGW WenKai、AR PL UKai、WenQuanYi Micro Hei |
 | 音訊 | PipeWire + WirePlumber |
-| GPU | AMD Radeon PRO W6800 (RDNA2, amdgpu) |
+| GPU | NVIDIA GeForce RTX 4090 48GB (Ada Lovelace, nvidia) |
 | 輸入法 | fcitx5 (拼音, Shift_L 切換, Wayland text-input-v3) |
 | 遊戲 | Steam + Proton、HMCL (Minecraft 啟動器)、Bottles、gamescope、gamemode |
 | 虛擬化 | Docker、virt-manager/QEMU/KVM |
 | 資料庫 | PostgreSQL 17 |
 | 打印 | CUPS、`epson-escpr`、`epson-escpr2`、`system-config-printer` |
-| AI | Ollama (ROCm, llama3.1:8b)、LM Studio、Claude Code、Google Antigravity CLI (`agy`)、Antigravity Tools (`antigravity-manage`) |
+| AI | Ollama (CUDA, llama3.1:8b)、LM Studio、Claude Code、Google Antigravity CLI (`agy`) |
 | 音樂 | 網易雲音樂 (netease-cloud-music-gtk) |
 | 媒體 | MPV、OBS Studio |
-| 3D 建模 | Blender (AMD HIP/ROCm GPU 加速) |
+| 3D 建模 | Blender |
 | 筆記 | Obsidian |
 | 通訊 | Discord (Vencord)、Telegram Desktop、微信 (WeChat)、QQ |
 | 瀏覽器 | Google Chrome、Tor Browser |
@@ -233,18 +233,23 @@ nixos-config/
 ├── flake.nix                     # Flake 輸入與系統定義
 ├── flake.lock                    # 依賴鎖定檔
 ├── hardware-configuration.nix    # 硬體掃描輸出
+├── install.sh                    # 一鍵安裝與部署腳本
 └── modules/
     ├── home/                     # Home Manager 模組
     │   ├── default.nix           # 模組匯入彙整與環境變數
-    │   ├── window-managers/      # 視窗管理器
+    │   ├── window-managers/      # 視窗管理器與鎖屏/休眠
     │   │   ├── default.nix       # 視窗管理器匯總
+    │   │   ├── hypridle.nix      # 空閒與休眠管理
+    │   │   ├── hyprlock.nix      # 鎖屏配置
     │   │   └── niri/             # Niri 配置、快捷鍵、視窗規則
     │   ├── noctalia/             # Noctalia 桌面外殼設定 (config.toml)
     │   ├── nixvim/               # Neovim (LSP、外掛、色彩主題)
+    │   │   ├── default.nix       # Nixvim 入口匯總
     │   │   ├── keymaps.nix       # 鍵位映射
     │   │   ├── options.nix       # 編輯器選項
     │   │   └── plugins/          # nixvim 外掛配置
     │   ├── waybar/               # Waybar 配置
+    │   │   ├── default.nix       # Waybar 主體配置與樣式
     │   │   └── scripts/          # Waybar 輔助腳本
     │   ├── rofi/                 # Rofi 啟動器與主題樣式
     │   ├── foot/                 # 終端機模擬器
@@ -259,7 +264,6 @@ nixos-config/
     │   ├── motrix/               # Motrix 下載管理員
     │   ├── qq/                   # QQ Linux 桌面版
     │   ├── wechat/               # WeChat 客户端
-    │   ├── antigravity-manager/  # Antigravity Tools 帳號管理與多模型本地代理
     │   ├── discord/              # Discord (Vencord)
     │   ├── chrome/               # 瀏覽器配置
     │   ├── bottles/              # Bottles (Windows 應用程式管理)
@@ -268,7 +272,7 @@ nixos-config/
     │   ├── virt-manager/         # virt-manager dconf
     │   ├── file-roller/          # 檔案壓縮管理員
     │   ├── wallpapers/           # 桌布收藏
-    │   ├── android-studio/       # Android Studio 整合開發環境 (中文語言包與 Google Antigravity 插件配置)
+    │   ├── android-studio/       # Android Studio 整合開發環境
     │   ├── vscode/               # VS Code 宣告式環境 (FHS、外掛生態、繁簡中文、userSettings)
     │   ├── cli/                  # CLI 工具配置 (bat, btop, cava, fastfetch, htop)
     │   ├── devshell/             # 開發環境 (base, Go, Node, Python)
@@ -276,23 +280,23 @@ nixos-config/
     │   ├── packages.nix          # 使用者套件（Blender, HMCL, Obsidian, 網易雲, Telegram, Claude Code, Antigravity CLI）
     │   ├── tools.nix             # CLI 工具 (zoxide, atuin, eza)
     │   ├── deploy-files.nix      # 部署檔案
-    │   ├── xdg-portal.nix        # XDG Portal 設定
-    │   └── features/             # 功能模組 (截圖)
+    │   └── xdg-portal.nix        # XDG Portal 設定
     ├── system/                   # NixOS 系統模組
     │   ├── default.nix           # 模組匯入彙整
-    │   ├── amdgpu.nix            # AMD Radeon PRO W6800 (amdgpu)
+    │   ├── nvidia.nix            # NVIDIA 驅動配置 (RTX 4090, 專有驅動, DRM KMS)
+    │   ├── ai.nix                # Ollama 本地模型服務 (CUDA 加速: ollama-cuda)
+    │   ├── cpu-spoof.nix         # CPU 偽裝欺騙模組 (偽裝為 Xeon Platinum 8368)
     │   ├── audio.nix             # PipeWire + WirePlumber
     │   ├── boot.nix              # systemd-boot、核心參數、BBR
     │   ├── fonts.nix             # 系統字型 (CJK 含 Noto Sans CJK、LXGW WenKai、Nerd Fonts)
     │   ├── network.nix           # NetworkManager (本地安全連線管理)
     │   ├── nix.nix               # Nix 設定 (USTC / 清華鏡像、trusted-users、GC、效能調校)
-    │   ├── virtualisation.nix    # Docker + 原生 virt-manager / KVM
-    │   ├── ai.nix                # Ollama (ROCm, 已啟用) + LM Studio
+    │   ├── packages.nix          # 系統套件與服務 (Steam, GameMode, Gamescope, Wireshark, Java, ADB)
     │   ├── services.nix          # 服務 (PostgreSQL、藍牙、niri、打印/CUPS)
     │   ├── locale.nix            # 語言環境與紐約時區
     │   ├── users.nix             # 使用者帳號與權限組 (含 adbusers, kvm, docker 等)
-    │   └── packages.nix          # 系統套件與服務 (Steam, GameMode, Gamescope, Wireshark, Java, ADB)
-    └── scripts/                  # 截圖輔助腳本 (captureFullscreen, captureSelectArea, niri-screenshot)
+    │   └── virtualisation.nix    # 虛擬化支援 (Docker + 原生 virt-manager / KVM)
+    └── scripts/                  # 截圖與輔助腳本 (captureFullscreen, captureSelectArea, niri-screenshot, noctalia-sync)
 ```
 
 ---
@@ -351,7 +355,7 @@ journalctl -b -p 3                       # 查看本次開機的錯誤日誌（�
 
 # 合成器與顯示
 niri msg version                         # 確認 niri 版本
-rocm-smi                                 # AMD GPU 狀態（溫度、時脈、VRAM）
+nvidia-smi                               # NVIDIA GPU 狀態（溫度、時脈、VRAM）
 
 # 字型與中文顯示
 fc-list | grep -i "lxgw wenkai"          # 確認 LXGW WenKai 字型已安裝
@@ -436,7 +440,7 @@ sudo nix-shell -p open-vm-tools --run "systemctl start open-vm-tools"
 | 輸入法無法使用 | 確認 fcitx5 已啟動（`pgrep fcitx5`），執行 `fcitx5-diagnose` 診斷；Qt 應用需 `QT_IM_MODULE=fcitx`（已於 home 層級設定） |
 | Chrome 無法輸入中文 | 確認 Chrome 以 Wayland 模式啟動（`--ozone-platform=wayland --enable-wayland-ime`，已於 niri 綁定與 desktop entry 設定） |
 | Steam 遊戲無法全螢幕 | 在 Steam 遊戲「啟動選項」加入 `gamescope -e -- %command%` |
-| Ollama 無法使用 GPU | 確認 `ollama-rocm` 已建構，執行 `ollama run llama3.1:8b` 測試 |
+| Ollama 無法使用 GPU | 確認 `ollama-cuda` 已啟用，執行 `ollama run llama3.1:8b` 測試 |
 | 休眠失敗：`Not enough free memory` | swap 需 ≥ RAM 大小，且 `resume=` 參數指向正確的 swap UUID（參考 [ArchWiki](https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate)） |
 | 休眠後立即喚醒 | 檢查 `journalctl -b | grep -i hibernate`，確認 swap 空間足夠且未分散於多個 swap |
 | btrfs 空間不足但 `df` 顯示有空間 | 執行 `sudo btrfs balance start /` 重新平衡資料與中繼資料區塊 |
