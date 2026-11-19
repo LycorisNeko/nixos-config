@@ -1,16 +1,16 @@
-﻿{ pkgs, ... }:
+{ pkgs, ... }:
 
 let
   mediaScript = pkgs.writeShellScript "waybar-media" ''
     status=$(playerctl status 2>/dev/null)
     if [ "$status" = "Playing" ]; then
-      track=$(playerctl metadata --format "{{artist}} 鈥?{{title}}" 2>/dev/null)
-      if [ ''${#track} -gt 40 ]; then track="''${track:0:40}鈥?; fi
-      echo "飦? $track"
+      track=$(playerctl metadata --format "{{artist}} — {{title}}" 2>/dev/null)
+      if [ ''${#track} -gt 40 ]; then track="''${track:0:40}…"; fi
+      echo " $track"
     elif [ "$status" = "Paused" ]; then
-      track=$(playerctl metadata --format "{{artist}} 鈥?{{title}}" 2>/dev/null)
-      if [ ''${#track} -gt 40 ]; then track="''${track:0:40}鈥?; fi
-      echo "飦? $track"
+      track=$(playerctl metadata --format "{{artist}} — {{title}}" 2>/dev/null)
+      if [ ''${#track} -gt 40 ]; then track="''${track:0:40}…"; fi
+      echo " $track"
     else
       echo ""
     fi
@@ -76,16 +76,16 @@ in
         max-length = 40;
         separate-outputs = true;
         rewrite = {
-          "(.*) 鈥?Brave" = "  $1";
-          "(.*) 鈥?Google Chrome" = "  $1";
+          "(.*) — Brave" = "  $1";
+          "(.*) — Google Chrome" = "  $1";
           "(.*)fish" = "  terminal";
           "(.*) - nvim" = "  $1";
         };
       };
 
       clock = {
-        format = "飥? {:%I:%M %p %d %b}";
-        format-alt = "飦? {:%a %d %B %Y}";
+        format = " {:%I:%M %p %d %b}";
+        format-alt = " {:%a %d %B %Y}";
         tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
       };
 
@@ -108,29 +108,29 @@ in
       };
 
       network = {
-        format-wifi = "飮? {essid}";
-        format-ethernet = "餅? {ifname}";
-        format-disconnected = "飮? Offline";
+        format-wifi = " {essid}";
+        format-ethernet = " {ifname}";
+        format-disconnected = " Offline";
         tooltip-format-wifi = "{essid} ({signalStrength}%)\n{ipaddr}";
         on-click = "nm-connection-editor";
       };
 
       cpu = {
         interval = 3;
-        format = "飲? {usage}%";
+        format = " {usage}%";
         tooltip = false;
       };
 
       memory = {
         interval = 3;
-        format = "飯? {used:0.1f}G";
+        format = " {used:0.1f}G";
         tooltip-format = "{used:0.1f} / {total:0.1f} GiB";
       };
 
       pulseaudio = {
         reverse-scrolling = 1;
-        format = "飥? {volume}%";
-        format-muted = "飥? muted";
+        format = " {volume}%";
+        format-muted = " muted";
         on-click = "pavucontrol";
         tooltip = false;
       };
@@ -140,24 +140,24 @@ in
           warning = 30;
           critical = 15;
         };
-        format = "飰€  {capacity}%";
-        format-charging = "飪? {capacity}%";
-        format-plugged = "飮? {capacity}%";
-        tooltip-format = "{timeTo} 鈥?{power:.1f}W";
+        format = "  {capacity}%";
+        format-charging = " {capacity}%";
+        format-plugged = " {capacity}%";
+        tooltip-format = "{timeTo} — {power:.1f}W";
       };
 
       "custom/notification" = {
         tooltip = false;
         format = "{icon}";
         format-icons = {
-          notification = "飪?;
-          none = "飮?;
-          dnd-notification = "飪?;
-          dnd-none = "飮?;
-          inhibited-notification = "飪?;
-          inhibited-none = "飮?;
-          dnd-inhibited-notification = "飪?;
-          dnd-inhibited-none = "飮?;
+          notification = "";
+          none = "";
+          dnd-notification = "";
+          dnd-none = "";
+          inhibited-notification = "";
+          inhibited-none = "";
+          dnd-inhibited-notification = "";
+          dnd-inhibited-none = "";
         };
         return-type = "json";
         exec-if = "which swaync-client";
@@ -173,7 +173,7 @@ in
       };
 
       "custom/power" = {
-        format = "飥?;
+        format = "";
         on-click = "bash $HOME/.config/waybar/scripts/powermenu.sh";
         tooltip = false;
       };
@@ -203,7 +203,7 @@ in
           font-weight: normal;
       }
 
-      /* 鈹€鈹€ Workspaces 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
+      /* ── Workspaces ─────────────────────────────────────── */
       #workspaces {
           padding: 0 6px;
       }
@@ -232,7 +232,7 @@ in
           color: #ff757f;
       }
 
-      /* 鈹€鈹€ Window title 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
+      /* ── Window title ───────────────────────────────────── */
       #window {
           color: #c8d3f5;
           padding: 0 10px;
@@ -240,7 +240,7 @@ in
           font-size: 12px;
       }
 
-      /* 鈹€鈹€ Module base 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
+      /* ── Module base ────────────────────────────────────── */
       #clock,
       #custom-weather,
       #custom-media,
@@ -260,10 +260,10 @@ in
       #custom-weather     { color: #86e1fc; border-left: 1px solid rgba(47,51,77,0.6); }
 
       #custom-media {
-      color: #c3e88d;
-      font-weight: normal;
-      font-size: 12px;
-      border-left: 1px solid rgba(47,51,77,0.6);  /* 鈫?was border-right */
+          color: #c3e88d;
+          font-weight: normal;
+          font-size: 12px;
+          border-left: 1px solid rgba(47,51,77,0.6);  /* ← was border-right */
       }
 
       #backlight { color: #ffc777; }
