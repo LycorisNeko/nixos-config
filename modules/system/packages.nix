@@ -21,7 +21,7 @@
     ffmpeg
     pciutils
     nvtopPackages.nvidia
-    ndctl
+    libndctl
     docker-compose
     wl-clipboard
     playerctl
