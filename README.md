@@ -57,10 +57,10 @@
 | 虛擬化 | Docker、virt-manager/QEMU/KVM |
 | 資料庫 | PostgreSQL 17 |
 | 打印 | CUPS、`epson-escpr`、`epson-escpr2`、`system-config-printer` |
-| AI | Ollama (CUDA, llama3.1:8b)、LM Studio、Claude Code、Google Antigravity CLI (`agy`) |
+| AI | LM Studio、Claude Code、Google Antigravity CLI (`agy`) |
 | 音樂 | 網易雲音樂 (netease-cloud-music-gtk) |
 | 媒體 | MPV、OBS Studio |
-| 3D 建模 | Blender |
+| 3D 建模 | （可選）Blender |
 | 筆記 | Obsidian |
 | 通訊 | Discord (Vencord)、Telegram Desktop、微信 (WeChat)、QQ |
 | 瀏覽器 | Google Chrome、Tor Browser |
@@ -284,7 +284,6 @@ nixos-config/
     ├── system/                   # NixOS 系統模組
     │   ├── default.nix           # 模組匯入彙整
     │   ├── nvidia.nix            # NVIDIA 驅動配置 (RTX 4090, 專有驅動, DRM KMS)
-    │   ├── ai.nix                # Ollama 本地模型服務 (CUDA 加速: ollama-cuda)
     │   ├── cpu-spoof.nix         # CPU 偽裝欺騙模組 (偽裝為 Xeon Platinum 8368)
     │   ├── audio.nix             # PipeWire + WirePlumber
     │   ├── boot.nix              # systemd-boot、核心參數、BBR
@@ -381,7 +380,6 @@ sudo btrfs scrub status /                # 查看 scrub 進度
 # 服務
 systemctl status postgresql              # 查看 PostgreSQL 服務狀態
 systemctl --user status                  # 查看使用者服務狀態
-ollama run llama3.1:8b                   # 測試 Ollama 推理
 ```
 
 ### 命令更改速查
@@ -440,7 +438,6 @@ sudo nix-shell -p open-vm-tools --run "systemctl start open-vm-tools"
 | 輸入法無法使用 | 確認 fcitx5 已啟動（`pgrep fcitx5`），執行 `fcitx5-diagnose` 診斷；Qt 應用需 `QT_IM_MODULE=fcitx`（已於 home 層級設定） |
 | Chrome 無法輸入中文 | 確認 Chrome 以 Wayland 模式啟動（`--ozone-platform=wayland --enable-wayland-ime`，已於 niri 綁定與 desktop entry 設定） |
 | Steam 遊戲無法全螢幕 | 在 Steam 遊戲「啟動選項」加入 `gamescope -e -- %command%` |
-| Ollama 無法使用 GPU | 確認 `ollama-cuda` 已啟用，執行 `ollama run llama3.1:8b` 測試 |
 | 休眠失敗：`Not enough free memory` | swap 需 ≥ RAM 大小，且 `resume=` 參數指向正確的 swap UUID（參考 [ArchWiki](https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate)） |
 | 休眠後立即喚醒 | 檢查 `journalctl -b | grep -i hibernate`，確認 swap 空間足夠且未分散於多個 swap |
 | btrfs 空間不足但 `df` 顯示有空間 | 執行 `sudo btrfs balance start /` 重新平衡資料與中繼資料區塊 |
