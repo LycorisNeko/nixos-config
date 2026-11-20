@@ -18,7 +18,7 @@ cd "$SCRIPT_DIR"
 
 # 1. Sync hardware-configuration.nix
 if [ -f "/etc/nixos/hardware-configuration.nix" ]; then
-    echo -e "${GREEN}[1/4] Syncing hardware configuration...${NC}"
+    echo -e "${GREEN}[1/3] Syncing hardware configuration...${NC}"
     cp /etc/nixos/hardware-configuration.nix ./hardware-configuration.nix
     echo -e "  Successfully copied /etc/nixos/hardware-configuration.nix to repository."
 else
@@ -32,12 +32,12 @@ else
 fi
 
 # 2. Stage changes to Git (prevents dirty tree warnings during flake update)
-echo -e "${GREEN}[2/4] Staging hardware configuration to Git...${NC}"
+echo -e "${GREEN}[2/3] Staging hardware configuration to Git...${NC}"
 git add -A
 echo -e "  Hardware configuration staged."
 
 # 3. Rebuild and switch NixOS configuration
-echo -e "${GREEN}[4/4] Building and applying NixOS configuration...${NC}"
+echo -e "${GREEN}[3/3] Building and applying NixOS configuration...${NC}"
 echo -e "${YELLOW}Notice: Please enter your sudo password if prompted.${NC}"
 sudo nixos-rebuild switch --flake .#
 
