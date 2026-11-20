@@ -343,25 +343,25 @@ timeout = 3000
 action = "command"
 command = "brightnessctl -s set 20%"
 resume_command = "brightnessctl -r"
-enabled = true
+enabled = false
 
-# 52 分钟：锁定会话，呈现 Noctalia 绝美锁屏
+# 52 分钟：锁定会话（已由 hypridle + hyprlock 接管）
 [idle.behavior.lock]
 timeout = 3120
 action = "lock"
-enabled = true
+enabled = false
 
-# 55 分钟：DPMS 熄灭显示器节省能源，按键或移动鼠标自动点亮
+# 60 分钟（1小时）：DPMS 熄灭显示器节省能源，按键或移动鼠标自动点亮
 [idle.behavior.screen-off]
-timeout = 3300
+timeout = 3600
 action = "screen_off"
 enabled = true
 
-# 60 分钟（1小时）：安全休眠（先锁屏后挂起）
+# 120 分钟（2小时）：安全休眠（先锁屏后挂起）
 [idle.behavior.suspend]
-timeout = 3600
+timeout = 7200
 action = "lock_and_suspend"
-enabled = true
+enabled = false
 
 # ── Hot Corners ───────────────────────────────────────────────────────────────
 

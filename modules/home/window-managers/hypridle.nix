@@ -11,16 +11,11 @@
 
       listener = [
         {
-          timeout = 300; # 5 min — 外接显示器无法用 brightnessctl 调亮度，改为关闭显示输出
-          on-timeout = "niri msg action power-off-monitors";
-          on-resume = "niri msg action power-on-monitors";
-        }
-        {
-          timeout = 600; # 10 min
+          timeout = 3600; # 60 min (1 小时)
           on-timeout = "loginctl lock-session";
         }
         {
-          timeout = 900; # 15 min — 锁屏后再次关显示器（避免锁屏动画空耗功耗）
+          timeout = 3605; # 锁屏后关闭显示输出（避免锁屏动画空耗功耗）
           on-timeout = "niri msg action power-off-monitors";
           on-resume = "niri msg action power-on-monitors";
         }
