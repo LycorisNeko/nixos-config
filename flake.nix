@@ -41,6 +41,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -50,6 +55,7 @@
       nixvim,
       nur,
       claude-code,
+      antigravity-nix,
       ...
     }:
     {
@@ -68,6 +74,7 @@
               nixpkgs.overlays = [
                 nur.overlays.default
                 claude-code.overlays.default
+                antigravity-nix.overlays.default
               ];
 
               # 忽略/放行 GTK2 的 broken 標記

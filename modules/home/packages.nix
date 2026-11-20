@@ -35,6 +35,8 @@
     kitty
 
     libreoffice-stable
+    google-antigravity # Antigravity 桌面版
+    google-antigravity-cli # Antigravity CLI (agy)
     antigravity-cli
 
     # Screenshot tools

@@ -36,4 +36,18 @@
     protonup-qt # Proton 版本管理工具
 
   ];
+
+  # 啟用 nix-ld 以運行通用動態鏈接 Linux 二進位檔（如 curl 下載的 agy 等 CLI/未打包原生程式）
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib
+      openssl
+      curl
+      glibc
+      libgcc
+      util-linux
+    ];
+  };
 }
