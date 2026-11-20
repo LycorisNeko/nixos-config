@@ -24,15 +24,17 @@
             ShareInputState = "All";
           };
           Hotkey = {
-            EnumerateWithTriggerKeys = "True";
+            EnumerateWithTriggerKeys = "False";
             ModifierOnlyKeyTimeout = 500;
           };
           "Hotkey/TriggerKeys" = {
             "0" = "Control+space";
+            "1" = "Shift_L"; # 單按左 Shift 切換中/英文（TriggerKeys 無條件觸發，徹底避免 Inactive 狀態下 AltTrigger 失效）
+            "2" = "Shift_R"; # 單按右 Shift 切換中/英文
           };
           "Hotkey/AltTriggerKeys" = {
-            "0" = "Shift_L"; # 單按左 Shift 切換中/英文（Windows 習慣）
-            "1" = "Shift_R"; # 單按右 Shift 切換中/英文
+            "0" = "Shift_L";
+            "1" = "Shift_R";
           };
           "Hotkey/EnumerateForwardKeys" = {
             "0" = "Control+Shift_L"; # Ctrl + Shift 切換輸入法（Windows 習慣）
@@ -49,8 +51,8 @@
             "Default Layout" = "us";
             DefaultIM = "pinyin";
           };
-          "Groups/0/Items/0".Name = "pinyin";
-          "Groups/0/Items/1".Name = "keyboard-us";
+          "Groups/0/Items/0".Name = "keyboard-us"; # 第一項作為 Inactive 基準（英文直出）
+          "Groups/0/Items/1".Name = "pinyin";      # 第二項為中文拼音（Active 狀態）
         };
         addons = {
           classicui.globalSection = {

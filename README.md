@@ -214,14 +214,14 @@
 
 系統採用與 **Windows 相同的輸入法習慣**，並**預設開機與開啟新視窗時啟動拼音**：
 
-- **預設啟動拼音**：`ActiveByDefault = True` 且首位輸入法為拼音，全域共享輸入狀態（`ShareInputState = All`）。新開啟視窗直接進入中文拼音，無須先喚醒。
-- **單按 Shift（左 Shift `Shift_L` 或右 Shift `Shift_R`）**：在當前拼音輸入法內部切換**中 / 英文模式**（Windows 體驗，單按即切換英文字母直出與中文拼音候選）。
+- **預設啟動拼音**：`ActiveByDefault = True`，預設輸入法為拼音（`DefaultIM = pinyin`），全域共享輸入狀態（`ShareInputState = All`）。新開啟視窗直接進入中文拼音，無須先喚醒。
+- **單按 Shift（左 Shift `Shift_L` 或右 Shift `Shift_R`）**：在美式英文與中文拼音之間無縫切換（Windows 體驗，單按即切換英文字母直出與中文拼音候選）。
 - **`Ctrl + Space` (`Control+space`)**：全局輸入法激活 / 切換鍵（Windows 經典熱鍵）。
 - **`Ctrl + Shift` (`Control+Shift`)**：在輸入法之間循環切換（拼音 ↔ 美式英文鍵盤，Windows 經典語言輪換熱鍵）。
 
 > [!NOTE]
 > **輸入法修復與優化細節**：
-> 1. **預設拼音與修飾鍵激活**：Fcitx5 原生機制下，若預設為英文鍵盤且處於 Inactive 狀態，單按 Shift（`AltTriggerKeys`）會因未激活而失效。現已設定 `ActiveByDefault = True` 並將拼音置於第一位，保證開機即用、按 Shift 立即切換中英文。
+> 1. **左/右 Shift 觸發修復**：Fcitx5 原生機制中，`AltTriggerKeys` 僅在處於 Active 或上一次由 AltTrigger 關閉時才允許觸發；若處於 Inactive 狀態單按 Shift 會被忽略。現將 `Shift_L` 與 `Shift_R` 直接加入 `TriggerKeys`，並規範輸入法清單首位為 `keyboard-us`（Inactive 英文直出）、第二位為 `pinyin`（Active 拼音），徹底解決左 Shift 無法切換中英文的問題。
 > 2. **修飾鍵逾時優化**：設置 `ModifierOnlyKeyTimeout = 500`ms，避免單按 Shift 判定過於嚴苛而漏觸發。
 > 3. **完整模組整合**：補全 `fcitx5-gtk` 與 `qt6Packages.fcitx5-qt` 模組，確保 GTK 與 Qt 應用程式均能完整呼叫輸入法。
 
