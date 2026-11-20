@@ -35,6 +35,7 @@
     kitty
 
     libreoffice-stable
+    mission-center # 系統監控工具 (GTK4/Libadwaita)
     google-antigravity # Antigravity 桌面版
     google-antigravity-cli # Antigravity CLI (agy)
     antigravity-cli

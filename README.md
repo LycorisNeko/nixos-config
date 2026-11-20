@@ -65,6 +65,7 @@
 | 通訊 | Discord (Vencord)、Telegram Desktop、微信 (WeChat)、QQ |
 | 瀏覽器 | Google Chrome、Tor Browser |
 | 檔案管理 | Yazi、file-roller |
+| 系統監控 | btop、Mission Center |
 | 下載工具 | Motrix |
 
 ---
