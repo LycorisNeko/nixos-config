@@ -19,7 +19,7 @@
     zathura
 
     # Apps consolidated from single-file modules
-    # (blender.override { cudaSupport = true; }) # 暫時註解避免本機編譯 openusd/cuda 等大型套件
+    blender # 使用官方二進位快取預設版本（不加自訂 cudaSupport override）
     hmcl
     obsidian
     netease-cloud-music-gtk

@@ -14,7 +14,6 @@
     ./services.nix
     ./users.nix
     ./virtualisation.nix
-    ./cpu-spoof.nix  # CPU 名称欺骗：伪装为 Xeon Platinum 8368
 
   ];
 

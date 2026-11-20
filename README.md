@@ -284,7 +284,6 @@ nixos-config/
     ├── system/                   # NixOS 系統模組
     │   ├── default.nix           # 模組匯入彙整
     │   ├── nvidia.nix            # NVIDIA 驅動配置 (RTX 4090, 專有驅動, DRM KMS)
-    │   ├── cpu-spoof.nix         # CPU 偽裝欺騙模組 (偽裝為 Xeon Platinum 8368)
     │   ├── audio.nix             # PipeWire + WirePlumber
     │   ├── boot.nix              # systemd-boot、核心參數、BBR
     │   ├── fonts.nix             # 系統字型 (CJK 含 Noto Sans CJK、LXGW WenKai、Nerd Fonts)
